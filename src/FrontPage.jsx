@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import GsapImageToggle from "./App";
-import styles from "./page.module.css";
+import styles from "./Page.module.css";
 import { ScrollTrigger } from "gsap/all";
 function FrontPage() {
   const [content, setContent] = useState(false);
