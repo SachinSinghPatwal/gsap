@@ -1,37 +1,57 @@
-import React, { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import "./index.css";
-import img1 from "./assets/img1.webp";
-import img2 from "./assets/img2.webp";
-import img3 from "./assets/img3.webp";
-import img4 from "./assets/img4.webp";
-import img5 from "./assets/img5.webp";
-import img6 from "./assets/img6.webp";
-import img7 from "./assets/img7.webp";
-import img8 from "./assets/img8.webp";
-import img9 from "./assets/img9.webp";
-import img10 from "./assets/img10.webp";
-import img11 from "./assets/img11.webp";
-import img12 from "./assets/img12.webp";
-import img13 from "./assets/img13.webp";
-import img14 from "./assets/img14.webp";
-import img15 from "./assets/img15.webp";
-import img16 from "./assets/img16.webp";
+import {
+  img1,
+  img2,
+  img3,
+  img4,
+  img5,
+  img6,
+  img7,
+  img8,
+  img9,
+  img10,
+  img11,
+  img12,
+  img13,
+  img14,
+  img15,
+  img16,
+  img17,
+  img18,
+  img19,
+  img20,
+  img21,
+  img22,
+  img23,
+  img24,
+  img25,
+  img26,
+  img27,
+  img28,
+  img29,
+  img30,
+  img31,
+  img32,
+} from "./index.js";
+import Variants from "./Variants";
 
 const totalDivs = 10;
 
-const GsapImageToggle = () => {
+const GsapImageToggle = ({ clicked, setClicked }) => {
   const holderRefs = useRef([]);
   const imgRefs = useRef([]);
   const tl = useRef(null);
   const backBtnRef = useRef(null);
-
-  const [clicked, setClicked] = useState(false);
   const [activeImage, setActiveImage] = useState(null);
   const [timelineReady, setTimelineReady] = useState(false);
 
   const firstGrid = [img1, img2, img3, img4, img5, img6, img7, img8];
   const secondGrid = [img9, img10, img11, img12, img13, img14, img15, img16];
+
+  const thirdGird = [img17, img18, img19, img20, img21, img22, img23, img24];
+  const fourtGrid = [img25, img26, img27, img28, img29, img30, img31, img32];
 
   const firstGridNames = [
     "Drift — A04",
@@ -53,6 +73,28 @@ const GsapImageToggle = () => {
     "Glow — F13",
     "Flux — N48",
     "Spire — C65",
+  ];
+
+  const thirdGridNames = [
+    "Driftwood — W50",
+    "Fold — T81",
+    "Shroud — E26",
+    "Ripple — P34",
+    "Fray — U07",
+    "Wane — R52",
+    "Tide — S33",
+    "Rift — G08",
+  ];
+
+  const fourthGridNames = [
+    "Spool — H94",
+    "Glitch — M70",
+    "Slip — F02",
+    "Husk — C15",
+    "Blur — V86",
+    "Fracture — A63",
+    "Mote — Y39",
+    "Aura — K21",
   ];
 
   const remToPx = (rem) => rem * 16;
@@ -145,68 +187,14 @@ const GsapImageToggle = () => {
   };
 
   return (
-    <>
-      {!clicked ? (
-        <>
-          <header className="grid grid-flow-col items-center mt-[.8rem] w-[75vw]">
-            <h1 className="font-bold text-[13px]">
-              repeating image transition
-            </h1>
-            <nav className="">
-              <a
-                className="font-bold text-[13px]"
-                href="https://tympanus.net/codrops/?p=92571"
-              >
-                more info,
-              </a>
-              <a
-                class="font-bold text-[13px]"
-                href="https://github.com/codrops/RepeatingImageTransition/"
-              >
-                Code,
-              </a>
-              <a
-                className="font-bold text-[13px]"
-                href="https://tympanus.net/codrops/demos/"
-              >
-                all demos
-              </a>
-            </nav>
-            <nav className="frame__tags">
-              <a
-                className="font-bold text-[13px]"
-                href="https://tympanus.net/codrops/demos/?tag=page-transition"
-              >
-                page-transition,
-              </a>
-              <a
-                className="font-bold text-[13px]"
-                href="https://tympanus.net/codrops/demos/?tag=repetition"
-              >
-                repetition,
-              </a>
-              <a
-                className="font-bold text-[13px]"
-                href="https://tympanus.net/codrops/demos/?tag=grid"
-              >
-                grid
-              </a>
-            </nav>
-          </header>
-          <div className="grid mt-[6rem] mb-[1rem] grid-flow-col justify-items-stretch items-baseline justify-between">
-            <h2 className=" text-[3rem] uppercase font-semibold tracking-[-3px] scale-y-150">
-              Shane Weber
-            </h2>
-            <span className="text-[13px] ">
-              effect 01: straight linear paths, smooth easing, clean timing,
-              minimal rotation.
-            </span>
-          </div>
-        </>
-      ) : (
-        ""
-      )}
-      <div style={{ position: "relative" }} className="grid place-items-center">
+    <div
+      className="grid place-items-center"
+      style={{
+        fontFamily: "halyard-display, sans-serif",
+      }}
+    >
+      {/* generated div */}
+      <div style={{ position: "relative" }} className="">
         {[...Array(totalDivs)].map((_, i) => {
           if (!activeImage) {
             return (
@@ -289,45 +277,43 @@ const GsapImageToggle = () => {
           );
         })}
 
-        {!clicked && (
-          <div className="flex flex-col gap-4">
-            {[firstGrid, secondGrid].map((grid, gridIndex) => (
-              <div key={gridIndex} className="grid grid-cols-8 gap-[.5rem]">
-                {grid.map((url, index) => {
-                  const globalIndex = gridIndex * 8 + index;
-                  const name =
-                    gridIndex === 0
-                      ? firstGridNames[index]
-                      : secondGridNames[index];
-                  return (
-                    <div key={globalIndex} className="flex flex-col  text-end">
-                      <img
-                        src={url}
-                        loading="lazy"
-                        alt={`button-img-${globalIndex}`}
-                        onClick={(e) => handleClick(url, globalIndex, e)}
-                        style={{
-                          cursor: "pointer",
-                          minWidth: "10rem",
-                          height: "12rem",
-                          objectFit: "cover",
-                          border: "2px solid #ccc",
-                          userSelect: "none",
-                        }}
-                        draggable={false}
-                      />
-                      <p className="text-[11px] lowercase font-semibold mb-[2rem]">
-                        {name}
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+        <Variants
+          clicked={clicked}
+          firstGrid={firstGrid}
+          secondGrid={secondGrid}
+          firstGridNames={firstGridNames}
+          secondGridNames={secondGridNames}
+          handleClick={handleClick}
+          text="Effect 01"
+          heading="Shane Weber"
+          effectText={"re imagined"}
+        />
 
+        <Variants
+          clicked={clicked}
+          firstGrid={secondGrid}
+          secondGrid={thirdGird}
+          firstGridNames={secondGridNames}
+          secondGridNames={thirdGridNames}
+          handleClick={handleClick}
+          text="Effect 02"
+          heading="Manika Jorge"
+          effectText={"reimaginers"}
+        />
+
+        <Variants
+          clicked={clicked}
+          firstGrid={thirdGird}
+          secondGrid={fourtGrid}
+          firstGridNames={thirdGridNames}
+          secondGridNames={fourthGridNames}
+          handleClick={handleClick}
+          text="Effect 03"
+          heading="Angela Wong"
+          effectText={"Replacement "}
+        />
+      </div>
+      {/* button */}
       {clicked && (
         <div
           ref={backBtnRef}
@@ -356,7 +342,7 @@ const GsapImageToggle = () => {
           </button>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
