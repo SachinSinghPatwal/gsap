@@ -15,7 +15,7 @@ function Variants({
     <>
       {/* heading 3 */}
       {!clicked ? (
-        <div className="grid mb-[1rem] mt-[2rem] grid-flow-col justify-items-stretch items-baseline justify-between">
+        <div className="grid mb-[1rem] mt-[5rem] grid-flow-col justify-items-stretch items-baseline justify-between">
           <h2 className=" text-[3rem] uppercase font-semibold tracking-[-3px] scale-y-150 ">
             <Effect
               initialText={effectText}

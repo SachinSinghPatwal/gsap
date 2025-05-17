@@ -310,7 +310,7 @@ const GsapImageToggle = ({ clicked, setClicked }) => {
           handleClick={handleClick}
           text="Effect 03"
           heading="Angela Wong"
-          effectText={"Replacement "}
+          effectText={"replacement"}
         />
       </div>
       {/* button */}
