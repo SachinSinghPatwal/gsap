@@ -191,7 +191,7 @@ const GsapImageToggle = ({ clicked, setClicked }) => {
   return (
     <>
       <div
-        className="grid place-items-center mb-[100vh] bg-white"
+        className="grid place-items-center bg-white"
         style={{
           fontFamily: "halyard-display, sans-serif",
         }}
@@ -352,34 +352,36 @@ const GsapImageToggle = ({ clicked, setClicked }) => {
             </button>
           </div>
         )}
-        <Parallax />
-        <ScrollbasedAnimation />
       </div>
-      <div className="z-[-1] h-full text-white sticky bottom-0 w-screen bg-orange-400 grid grid-flow-row">
-        <div className="grid mt-[4rem] grid-flow-col justify-between mx-[5rem]">
-          <div>
-            <h1 className="text-[35px] font-semibold">Work</h1>
-            <h1 className="text-[35px] font-semibold">Studios</h1>
-            <h1 className="text-[35px] font-semibold">Contact</h1>
-          </div>
-          <div>
-            <h1 className="text-[25px] font-semibold mb-[2rem]">
-              Get industry insights and creative <br />
-              inpirations straight to you inbox.
-            </h1>
-            <div className="grid grid-flow-col justify-between mb-[1.5rem]">
-              <h1>Email address</h1>
-              <div> -&#62; </div>
+      {!(<ScrollbasedAnimation />)}
+      {!clicked && <Parallax />}
+      {!clicked && (
+        <div className="z-[-1] h-full text-white sticky bottom-0 w-screen bg-orange-400 grid grid-flow-row">
+          <div className="grid mt-[4rem] grid-flow-col justify-between mx-[5rem]">
+            <div>
+              <h1 className="text-[35px] font-semibold">Work</h1>
+              <h1 className="text-[35px] font-semibold">Studios</h1>
+              <h1 className="text-[35px] font-semibold">Contact</h1>
             </div>
-            <hr className="h-[1px] bg-white" />
+            <div>
+              <h1 className="text-[25px] font-semibold mb-[2rem]">
+                Get industry insights and creative <br />
+                inpirations straight to you inbox.
+              </h1>
+              <div className="grid grid-flow-col justify-between mb-[1.5rem]">
+                <h1>Email address</h1>
+                <div> -&#62; </div>
+              </div>
+              <hr className="h-[1px] bg-white" />
+            </div>
+          </div>
+          <div>
+            <h1 className="font-semibold mx-[5rem] grid place-items-center h-fit text-[20rem]">
+              Sachin ;)
+            </h1>
           </div>
         </div>
-        <div>
-          <h1 className="font-semibold mx-[5rem] grid place-items-center h-fit text-[20rem]">
-            Sachin ;)
-          </h1>
-        </div>
-      </div>
+      )}
     </>
   );
 };
