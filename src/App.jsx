@@ -353,7 +353,7 @@ const GsapImageToggle = ({ clicked, setClicked }) => {
           </div>
         )}
       </div>
-      {!(<ScrollbasedAnimation />)}
+      {!clicked && <ScrollbasedAnimation />}
       {!clicked && <Parallax />}
       {!clicked && (
         <div className="z-[-1] h-full text-white sticky bottom-0 w-screen bg-orange-400 grid grid-flow-row">
