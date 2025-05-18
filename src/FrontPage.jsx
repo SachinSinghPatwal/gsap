@@ -127,6 +127,7 @@ function FrontPage() {
         {!clicked && (
           <div className="landing w-full overflow-hidden h-screen relative">
             <img
+              loading="lazy"
               className="absolute  left-0 w-full  object-center"
               src="./three.png"
               alt="background"
