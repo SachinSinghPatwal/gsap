@@ -36,6 +36,8 @@ import {
   img32,
 } from "./index.js";
 import Variants from "./Variants";
+import Parallax from "./Motion.jsx";
+import ScrollbasedAnimation from "./Scroller.jsx";
 
 const totalDivs = 10;
 
@@ -187,162 +189,198 @@ const GsapImageToggle = ({ clicked, setClicked }) => {
   };
 
   return (
-    <div
-      className="grid place-items-center"
-      style={{
-        fontFamily: "halyard-display, sans-serif",
-      }}
-    >
-      {/* generated div */}
-      <div style={{ position: "relative" }} className="">
-        {[...Array(totalDivs)].map((_, i) => {
-          if (!activeImage) {
+    <>
+      <div
+        className="grid place-items-center mb-[100vh] bg-white"
+        style={{
+          fontFamily: "halyard-display, sans-serif",
+        }}
+      >
+        {/* generated div */}
+        <div style={{ position: "relative" }} className="">
+          {[...Array(totalDivs)].map((_, i) => {
+            if (!activeImage) {
+              return (
+                <div
+                  key={i}
+                  ref={(el) => (holderRefs.current[i] = el)}
+                  style={{
+                    position: "absolute",
+                    overflow: "hidden",
+                    width: `${10 + i * 2}rem`,
+                    height: `${12 + i * 2}rem`,
+                    opacity: 1,
+                    pointerEvents: "none",
+                  }}
+                >
+                  <img
+                    ref={(el) => (imgRefs.current[i] = el)}
+                    loading="lazy"
+                    src={firstGrid[0]}
+                    alt={`img-${i}`}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                </div>
+              );
+            }
+
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            const firstLeft = activeImage.left;
+            const screenPaddingX = 32;
+            const lastLeft =
+              activeImage.side === "left"
+                ? screenPaddingX
+                : viewportWidth - getDivWidthPx(totalDivs - 1) - screenPaddingX;
+
+            const intervals = totalDivs - 1;
+            const leftPos =
+              firstLeft + ((lastLeft - firstLeft) / intervals) * i;
+            const clampedLeft = Math.min(
+              Math.max(leftPos, screenPaddingX),
+              viewportWidth - getDivWidthPx(i) - screenPaddingX
+            );
+
+            const screenPaddingY = 130;
+            const firstTop = activeImage.top;
+            const lastTop =
+              firstTop < viewportHeight / 2
+                ? viewportHeight -
+                  getDivHeightPx(totalDivs - 1) -
+                  screenPaddingY
+                : screenPaddingY;
+
+            const topPos = firstTop + ((lastTop - firstTop) / intervals) * i;
+            const clampedTop = Math.min(
+              Math.max(topPos, screenPaddingY),
+              viewportHeight - getDivHeightPx(i) - screenPaddingY
+            );
+
             return (
               <div
                 key={i}
                 ref={(el) => (holderRefs.current[i] = el)}
                 style={{
-                  position: "absolute",
+                  position: "fixed",
+                  top: `${clampedTop}px`,
+                  left: `${clampedLeft}px`,
                   overflow: "hidden",
                   width: `${10 + i * 2}rem`,
-                  height: `${12 + i * 2}rem`,
+                  height: `${12 + i * 2.8}rem`,
                   opacity: 1,
                   pointerEvents: "none",
+                  zIndex: 1000,
                 }}
               >
                 <img
                   ref={(el) => (imgRefs.current[i] = el)}
-                  loading="lazy"
-                  src={firstGrid[0]}
+                  src={activeImage.url}
                   alt={`img-${i}`}
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  draggable={false}
                 />
               </div>
             );
-          }
+          })}
 
-          const viewportWidth = window.innerWidth;
-          const viewportHeight = window.innerHeight;
-          const firstLeft = activeImage.left;
-          const screenPaddingX = 32;
-          const lastLeft =
-            activeImage.side === "left"
-              ? screenPaddingX
-              : viewportWidth - getDivWidthPx(totalDivs - 1) - screenPaddingX;
+          <Variants
+            clicked={clicked}
+            firstGrid={firstGrid}
+            secondGrid={secondGrid}
+            firstGridNames={firstGridNames}
+            secondGridNames={secondGridNames}
+            handleClick={handleClick}
+            text="Effect 01"
+            heading="Shane Weber"
+            effectText={"re imagined"}
+          />
 
-          const intervals = totalDivs - 1;
-          const leftPos = firstLeft + ((lastLeft - firstLeft) / intervals) * i;
-          const clampedLeft = Math.min(
-            Math.max(leftPos, screenPaddingX),
-            viewportWidth - getDivWidthPx(i) - screenPaddingX
-          );
+          <Variants
+            clicked={clicked}
+            firstGrid={secondGrid}
+            secondGrid={thirdGird}
+            firstGridNames={secondGridNames}
+            secondGridNames={thirdGridNames}
+            handleClick={handleClick}
+            text="Effect 02"
+            heading="Manika Jorge"
+            effectText={"reimaginers"}
+          />
 
-          const screenPaddingY = 130;
-          const firstTop = activeImage.top;
-          const lastTop =
-            firstTop < viewportHeight / 2
-              ? viewportHeight - getDivHeightPx(totalDivs - 1) - screenPaddingY
-              : screenPaddingY;
-
-          const topPos = firstTop + ((lastTop - firstTop) / intervals) * i;
-          const clampedTop = Math.min(
-            Math.max(topPos, screenPaddingY),
-            viewportHeight - getDivHeightPx(i) - screenPaddingY
-          );
-
-          return (
-            <div
-              key={i}
-              ref={(el) => (holderRefs.current[i] = el)}
-              style={{
-                position: "fixed",
-                top: `${clampedTop}px`,
-                left: `${clampedLeft}px`,
-                overflow: "hidden",
-                width: `${10 + i * 2}rem`,
-                height: `${12 + i * 2.8}rem`,
-                opacity: 1,
-                pointerEvents: "none",
-                zIndex: 1000,
-              }}
-            >
-              <img
-                ref={(el) => (imgRefs.current[i] = el)}
-                src={activeImage.url}
-                alt={`img-${i}`}
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                draggable={false}
-              />
-            </div>
-          );
-        })}
-
-        <Variants
-          clicked={clicked}
-          firstGrid={firstGrid}
-          secondGrid={secondGrid}
-          firstGridNames={firstGridNames}
-          secondGridNames={secondGridNames}
-          handleClick={handleClick}
-          text="Effect 01"
-          heading="Shane Weber"
-          effectText={"re imagined"}
-        />
-
-        <Variants
-          clicked={clicked}
-          firstGrid={secondGrid}
-          secondGrid={thirdGird}
-          firstGridNames={secondGridNames}
-          secondGridNames={thirdGridNames}
-          handleClick={handleClick}
-          text="Effect 02"
-          heading="Manika Jorge"
-          effectText={"reimaginers"}
-        />
-
-        <Variants
-          clicked={clicked}
-          firstGrid={thirdGird}
-          secondGrid={fourtGrid}
-          firstGridNames={thirdGridNames}
-          secondGridNames={fourthGridNames}
-          handleClick={handleClick}
-          text="Effect 03"
-          heading="Angela Wong"
-          effectText={"replacement"}
-        />
-      </div>
-      {/* button */}
-      {clicked && (
-        <div
-          ref={backBtnRef}
-          className="absolute bottom-0 m-4 p-2 grid justify-items-end z-[100000]"
-          style={{
-            left: activeImage.side === "right" ? "0" : "auto",
-            right: activeImage.side === "left" ? "0" : "auto",
-            minWidth: "6rem",
-          }}
-        >
-          <p className="text-[13px] text-black font-semibold">
-            {activeImage?.name}
-          </p>
-          <button
-            className="text-red-600 text-[14px] w-fit cursor-pointer "
-            onClick={() => {
-              setClicked(false);
-              setActiveImage(null);
-              tl.current.seek(0).pause();
-              holderRefs.current.forEach((ref) => {
-                if (ref) ref.style.pointerEvents = "none";
-              });
+          <Variants
+            clicked={clicked}
+            firstGrid={thirdGird}
+            secondGrid={fourtGrid}
+            firstGridNames={thirdGridNames}
+            secondGridNames={fourthGridNames}
+            handleClick={handleClick}
+            text="Effect 03"
+            heading="Angela Wong"
+            effectText={"replacement"}
+          />
+        </div>
+        {/* button */}
+        {clicked && (
+          <div
+            ref={backBtnRef}
+            className="absolute bottom-0 m-4 p-2 grid justify-items-end z-[100000]"
+            style={{
+              left: activeImage.side === "right" ? "0" : "auto",
+              right: activeImage.side === "left" ? "0" : "auto",
+              minWidth: "6rem",
             }}
           >
-            Close
-          </button>
+            <p className="text-[13px] text-black font-semibold">
+              {activeImage?.name}
+            </p>
+            <button
+              className="text-red-600 text-[14px] w-fit cursor-pointer "
+              onClick={() => {
+                setClicked(false);
+                setActiveImage(null);
+                tl.current.seek(0).pause();
+                holderRefs.current.forEach((ref) => {
+                  if (ref) ref.style.pointerEvents = "none";
+                });
+              }}
+            >
+              Close
+            </button>
+          </div>
+        )}
+        <Parallax />
+        <ScrollbasedAnimation />
+      </div>
+      <div className="z-[-1] h-full text-white sticky bottom-0 w-screen bg-orange-400 grid grid-flow-row">
+        <div className="grid mt-[4rem] grid-flow-col justify-between mx-[5rem]">
+          <div>
+            <h1 className="text-[35px] font-semibold">Work</h1>
+            <h1 className="text-[35px] font-semibold">Studios</h1>
+            <h1 className="text-[35px] font-semibold">Contact</h1>
+          </div>
+          <div>
+            <h1 className="text-[25px] font-semibold mb-[2rem]">
+              Get industry insights and creative <br />
+              inpirations straight to you inbox.
+            </h1>
+            <div className="grid grid-flow-col justify-between mb-[1.5rem]">
+              <h1>Email address</h1>
+              <div> -&#62; </div>
+            </div>
+            <hr className="h-[1px] bg-white" />
+          </div>
         </div>
-      )}
-    </div>
+        <div>
+          <h1 className="font-semibold mx-[5rem] grid place-items-center h-fit text-[20rem]">
+            Sachin ;)
+          </h1>
+        </div>
+      </div>
+    </>
   );
 };
 
